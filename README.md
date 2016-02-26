@@ -1,6 +1,6 @@
 ### Getting started with Terraform
 
-#### Note:
+#### Notes:
 - This example assumes that you will have aws credentials configured in your shell environment
 - Defaults to us-east-1 region.
 - You will also need to replace key_name in the commands below.
