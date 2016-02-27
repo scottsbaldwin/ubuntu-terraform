@@ -15,6 +15,8 @@ coreos:
     initial-advertise-peer-urls: http://$private_ipv4:2380
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
     listen-peer-urls: http://$private_ipv4:2380
+  flannel:
+    etcd_prefix: "/coreos.com/network2"
   units:
   - name: etcd2.service
     command: start

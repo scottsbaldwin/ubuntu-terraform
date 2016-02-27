@@ -31,7 +31,6 @@ resource "aws_security_group" "coreos_sg" {
     cidr_blocks = ["${var.inbound_cidr}"]
   }
 
-  # outbound internet access
   egress {
     from_port   = 0
     to_port     = 0
@@ -53,7 +52,6 @@ resource "aws_security_group" "allow_ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # outbound internet access
   egress {
     from_port   = 0
     to_port     = 0
