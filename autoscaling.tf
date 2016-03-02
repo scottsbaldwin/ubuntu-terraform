@@ -1,9 +1,13 @@
 resource "aws_launch_configuration" "coreos_launch_config" {
     associate_public_ip_address = true
-    name = "coreos-example-lc"
     image_id = "${lookup(var.aws_amis, var.aws_region)}"
     instance_type = "${var.instance_type}"
     key_name = "${var.key_name}"
+    name = "coreos-example-lc"
+    root_block_device = {
+      volume_type = "gp2"
+      volume_size = 50
+    }
     security_groups = ["${aws_security_group.coreos_sg.id}", "${aws_security_group.allow_ssh.id}"]
     user_data = <<EOF
 #cloud-config
