@@ -14,17 +14,17 @@ export AWS_SECRET_KEY=[redacted]
 export AWS_SECRET_ACCESS_KEY=[redacted]
 ```
 
-This CoreOS/Terraform example has the following structure:
+This Terraform example has the following structure:
 
 - variables - Contains re-usable variables for the various resources
 - network - Establishes the networking components (VPC, subnet, Internet Gateway)
-- securitygroups - Creates the security groups for CoreOS and public-ssh access
+- securitygroups - Creates the security groups for public-ssh access
 - autoscaling - Creates launch configuration and auto scaling group for instances to run in
 
 ### Planning
+
 ```
-export ETCD_TOKEN=`curl -s http://discovery.etcd.io/new`
-terraform plan -var "token=$ETCD_TOKEN" -var "key_name=XYZ"
+terraform plan -var "key_name=XYZ"
 ```
 
 This will output the plan for resources to be created, updated, or deleted as part of running the Terraform files.
@@ -33,15 +33,15 @@ This will output the plan for resources to be created, updated, or deleted as pa
 ### Creation
 
 ```
-terraform apply -var "token=$ETCD_TOKEN" -var "key_name=XYZ"
+terraform apply -var "key_name=XYZ"
 ```
 
-This will create all of the resources defined in Terraform and give you a small (3 node) CoreOS cluster.
+This will create all of the resources defined in Terraform and give you a small (3 node) ubuntu cluster.
 
 
 ### Cleanup
 ```
-terraform deploy -var "token=$ETCD_TOKEN" -var "key_name=XYZ"
+terraform destroy -var "key_name=XYZ"
 ```
 
 This will delete all of the resources created by application of the Terraform plan

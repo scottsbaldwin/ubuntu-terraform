@@ -1,14 +1,7 @@
-resource "aws_security_group" "coreos_sg" {
-  name = "coreos_sg"
-  description = "CoreOS SecurityGroup"
-  vpc_id = "${aws_vpc.coreos.id}"
-
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["${var.inbound_cidr}"]
-  }
+resource "aws_security_group" "swarm_sg" {
+  name = "swarm_sg"
+  description = "swarm SecurityGroup"
+  vpc_id = "${aws_vpc.swarm.id}"
 
   ingress {
     from_port = 2379
@@ -43,7 +36,7 @@ resource "aws_security_group" "coreos_sg" {
 resource "aws_security_group" "allow_ssh" {
   name = "allow-ssh"
   description = "allow incoming ssh"
-  vpc_id = "${aws_vpc.coreos.id}"
+  vpc_id = "${aws_vpc.swarm.id}"
 
   ingress {
     from_port = 22
