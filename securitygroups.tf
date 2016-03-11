@@ -1,7 +1,7 @@
-resource "aws_security_group" "swarm_sg" {
-  name = "swarm_sg"
-  description = "swarm SecurityGroup"
-  vpc_id = "${aws_vpc.swarm.id}"
+resource "aws_security_group" "cluster_sg" {
+  name = "${var.name}-cluster"
+  description = "allow ${var.name} cluster communication"
+  vpc_id = "${aws_vpc.cluster.id}"
 
   ingress {
     from_port = 80
@@ -20,9 +20,9 @@ resource "aws_security_group" "swarm_sg" {
 }
 
 resource "aws_security_group" "allow_ssh" {
-  name = "allow-ssh"
+  name = "${var.name}-allow-ssh"
   description = "allow incoming ssh"
-  vpc_id = "${aws_vpc.swarm.id}"
+  vpc_id = "${aws_vpc.cluster.id}"
 
   ingress {
     from_port = 22
