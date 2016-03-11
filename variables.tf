@@ -2,6 +2,8 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
+variable "name" {}
+
 variable "aws_amis" {
   default = {
     us-east-1 = "ami-fce3c696"
