@@ -6,7 +6,7 @@ variable "name" {}
 
 variable "aws_amis" {
   default = {
-    us-east-1 = "ami-fce3c696"
+    us-east-1 = "ami-ff427095"
   }
 }
 
@@ -18,8 +18,13 @@ variable "availability_zones" {
   default = "us-east-1b,us-east-1c,us-east-1d,us-east-1e"
 }
 
-variable "instance_type" {
-  default = "t2.medium"
+variable "control_instance_type" {
+  default = "m3.medium"
+  description = "AWS instance type"
+}
+
+variable "data_instance_type" {
+  default = "m4.large"
   description = "AWS instance type"
 }
 
