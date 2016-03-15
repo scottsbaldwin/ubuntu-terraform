@@ -3,9 +3,21 @@ resource "aws_security_group" "cluster_sg" {
   description = "allow ${var.name} cluster communication"
   vpc_id = "${aws_vpc.cluster.id}"
 
+  # I think we should just include Swarm, Nomad, Consul, etc.. ports in here, for simplification
+  # I labeled the nomad ports below
+
+  # For Nomad
   ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 4647
+    to_port = 4647
+    protocol = "tcp"
+    cidr_blocks = ["${var.inbound_cidr}"]
+  }
+
+  # For Nomad
+  ingress {
+    from_port = 4648
+    to_port = 4648
     protocol = "tcp"
     cidr_blocks = ["${var.inbound_cidr}"]
   }
