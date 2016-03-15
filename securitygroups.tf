@@ -3,23 +3,12 @@ resource "aws_security_group" "cluster_sg" {
   description = "allow ${var.name} cluster communication"
   vpc_id = "${aws_vpc.cluster.id}"
 
-  # I think we should just include Swarm, Nomad, Consul, etc.. ports in here, for simplification
-  # I labeled the nomad ports below
-
-  # For Nomad
+  # Nomad uses dynamic ports for services, because of this, we need to allow all traffic between cluster members
   ingress {
-    from_port = 4647
-    to_port = 4647
-    protocol = "tcp"
-    cidr_blocks = ["${var.inbound_cidr}"]
-  }
-
-  # For Nomad
-  ingress {
-    from_port = 4648
-    to_port = 4648
-    protocol = "tcp"
-    cidr_blocks = ["${var.inbound_cidr}"]
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    security_groups = ["${aws_security_group.cluster_sg.id}"]
   }
 
   egress {
@@ -41,6 +30,46 @@ resource "aws_security_group" "allow_ssh" {
     to_port = 22
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "allow_http" {
+  name = "${var.name}-allow-http"
+  description = "allow incoming http"
+  vpc_id = "${aws_vpc.cluster.id}"
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "allow_consul_http" {
+  name = "${var.name}-allow-consul-http"
+  description = "allow incoming consul http"
+  vpc_id = "${aws_vpc.cluster.id}"
+
+  ingress {
+    from_port = 8500
+    to_port = 8500
+    protocol = "tcp"
+    cidr_blocks = ["${var.personal_home_ip}/32"]
   }
 
   egress {
