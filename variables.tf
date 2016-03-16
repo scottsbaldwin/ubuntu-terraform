@@ -4,6 +4,11 @@ variable "aws_region" {
 
 variable "name" {}
 
+# Defaults to something unrouteable
+variable "personal_home_ip" {
+  default = "10.0.0.0"
+}
+
 variable "aws_amis" {
   default = {
     us-east-1 = "ami-ff427095"

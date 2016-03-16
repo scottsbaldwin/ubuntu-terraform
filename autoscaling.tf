@@ -8,7 +8,7 @@ resource "aws_launch_configuration" "control_plane_launch_config_001" {
       volume_type = "gp2"
       volume_size = 16
     }
-    security_groups = ["${aws_security_group.cluster_sg.id}", "${aws_security_group.allow_ssh.id}", "${aws_security_group.allow_consul_http.id}", "${aws_security_group.allow_http.id}"]
+    security_groups = ["${aws_security_group.cluster_sg.id}", "${aws_security_group.allow_ssh.id}", "${aws_security_group.allow_consul_http.id}"]
 
     lifecycle {
       create_before_destroy = false
@@ -50,7 +50,7 @@ resource "aws_launch_configuration" "data_plane_launch_config" {
       volume_type = "gp2"
       volume_size = 50
     }
-    security_groups = ["${aws_security_group.cluster_sg.id}", "${aws_security_group.allow_ssh.id}"]
+    security_groups = ["${aws_security_group.cluster_sg.id}", "${aws_security_group.allow_ssh.id}", "${aws_security_group.allow_http.id}"]
 
     lifecycle {
       create_before_destroy = false

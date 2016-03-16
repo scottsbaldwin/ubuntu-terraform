@@ -8,7 +8,7 @@ resource "aws_security_group" "cluster_sg" {
     from_port = 0
     to_port = 0
     protocol = "-1"
-    security_groups = ["${aws_security_group.cluster_sg.id}"]
+    cidr_blocks = ["10.0.10.0/23"]
   }
 
   egress {
